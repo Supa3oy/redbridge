@@ -1,7 +1,10 @@
+export const dynamic = "force-dynamic";
+
 import { auth } from "@clerk/nextjs/server";
 import { supabaseAdmin } from "@/lib/supabase";
 import { LIMITS_BY_PLAN } from "@/lib/anthropic";
 import { BillingPanel } from "@/components/settings/BillingPanel";
+import { EmailPreferencesPanel } from "@/components/settings/EmailPreferencesPanel";
 import type { Plan } from "@/lib/anthropic";
 
 export default async function SettingsPage() {
@@ -9,7 +12,7 @@ export default async function SettingsPage() {
 
   const { data: user } = await supabaseAdmin
     .from("users")
-    .select("email, plan, usage_count")
+    .select("email, plan, usage_count, email_subscribed")
     .eq("id", userId!)
     .single();
 
@@ -19,8 +22,8 @@ export default async function SettingsPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-2xl font-bold">Settings</h1>
-        <p className="mt-1 text-sm text-[#6b7280]">Plan, billing, and account</p>
+        <h1 className="text-xl font-bold md:text-2xl">Settings</h1>
+        <p className="mt-1 text-sm text-[#6b7280]">Plan, billing, and account preferences</p>
       </div>
 
       <BillingPanel
@@ -28,6 +31,10 @@ export default async function SettingsPage() {
         plan={plan}
         usageCount={user?.usage_count ?? 0}
         usageLimit={usageLimit === Infinity ? 9999 : usageLimit}
+      />
+
+      <EmailPreferencesPanel
+        initialSubscribed={user?.email_subscribed ?? true}
       />
     </div>
   );

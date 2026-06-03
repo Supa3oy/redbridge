@@ -13,6 +13,7 @@ export interface Database {
           usage_reset_at: string;
           created_at: string;
           onboarding_completed: boolean;
+          email_subscribed: boolean;
           brand_name: string | null;
           website_url: string | null;
           industry: string | null;
@@ -27,6 +28,7 @@ export interface Database {
           usage_count?: number;
           usage_reset_at?: string;
           onboarding_completed?: boolean;
+          email_subscribed?: boolean;
           brand_name?: string | null;
           website_url?: string | null;
           industry?: string | null;
@@ -41,6 +43,7 @@ export interface Database {
           usage_count?: number;
           usage_reset_at?: string;
           onboarding_completed?: boolean;
+          email_subscribed?: boolean;
           brand_name?: string | null;
           website_url?: string | null;
           industry?: string | null;
@@ -167,6 +170,47 @@ export interface Database {
           industry?: string | null;
           result?: Json;
           created_at?: string;
+        };
+        Relationships: [];
+      };
+      shoot_briefs: {
+        Row: {
+          id: string;
+          user_id: string;
+          brand_name: string;
+          product_name: string;
+          angle: string;
+          result: Json;
+          created_at: string;
+        };
+        Insert: {
+          user_id: string;
+          brand_name: string;
+          product_name: string;
+          angle: string;
+          result: Json;
+        };
+        Update: {
+          result?: Json;
+        };
+        Relationships: [];
+      };
+      email_logs: {
+        Row: {
+          id: string;
+          user_id: string;
+          email_type: string;
+          sent_at: string;
+          opened: boolean;
+        };
+        Insert: {
+          user_id: string;
+          email_type?: string;
+          sent_at?: string;
+          opened?: boolean;
+        };
+        Update: {
+          opened?: boolean;
         };
         Relationships: [];
       };
@@ -327,6 +371,27 @@ export interface SavedCompetitorRow {
   competitor_name: string;
   industry: string | null;
   result: Json;
+  created_at: string;
+}
+
+export interface ShootBriefResult {
+  sceneDescription: string;
+  propsList: string[];
+  colourPalette: Array<{ hex: string; name: string }>;
+  modelDirection: string | null;
+  cameraComposition: string;
+  lightingDirection: string;
+  captionHooks: string[];
+  xhsTips: string[];
+  referenceDescription: string;
+}
+
+export interface SavedShootBrief {
+  id: string;
+  brand_name: string;
+  product_name: string;
+  angle: string;
+  result: ShootBriefResult;
   created_at: string;
 }
 

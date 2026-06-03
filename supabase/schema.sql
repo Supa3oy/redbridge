@@ -111,6 +111,33 @@ create index if not exists saved_inbox_user_id_idx on saved_inbox(user_id);
 create index if not exists post_metrics_user_id_idx on post_metrics(user_id);
 create index if not exists post_metrics_posted_at_idx on post_metrics(posted_at desc);
 
+-- -----------------------------------------------------------------------
+-- v3: Shoot briefs + email system
+-- -----------------------------------------------------------------------
+create table if not exists shoot_briefs (
+  id uuid primary key default gen_random_uuid(),
+  user_id text not null references users(id) on delete cascade,
+  brand_name text not null,
+  product_name text not null,
+  angle text not null,
+  result jsonb not null,
+  created_at timestamptz not null default now()
+);
+
+create table if not exists email_logs (
+  id uuid primary key default gen_random_uuid(),
+  user_id text not null references users(id) on delete cascade,
+  email_type text not null default 'weekly_digest',
+  sent_at timestamptz not null default now(),
+  opened boolean not null default false
+);
+
+create index if not exists shoot_briefs_user_id_idx on shoot_briefs(user_id);
+create index if not exists email_logs_user_id_idx on email_logs(user_id);
+
+-- Add email_subscribed to users (run if upgrading existing table)
+alter table users add column if not exists email_subscribed boolean not null default true;
+
 -- Row Level Security
 alter table users enable row level security;
 alter table toolkits enable row level security;

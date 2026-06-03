@@ -13,6 +13,7 @@ import {
   CalendarDays,
   Inbox,
   BarChart3,
+  Camera,
 } from "lucide-react";
 import { UserButton } from "@clerk/nextjs";
 import { cn } from "@/lib/utils";
@@ -24,6 +25,7 @@ const NAV_GROUPS = [
       { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
       { href: "/generate", label: "Generate", icon: Wand2 },
       { href: "/calendar", label: "Calendar", icon: CalendarDays },
+      { href: "/shoot-brief", label: "Shoot Brief", icon: Camera },
     ],
   },
   {
