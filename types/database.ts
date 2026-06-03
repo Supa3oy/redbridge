@@ -170,6 +170,75 @@ export interface Database {
         };
         Relationships: [];
       };
+      saved_comments: {
+        Row: {
+          id: string;
+          user_id: string;
+          comments: Json;
+          replies: Json;
+          created_at: string;
+        };
+        Insert: {
+          user_id: string;
+          comments: Json;
+          replies: Json;
+        };
+        Update: {
+          comments?: Json;
+          replies?: Json;
+        };
+        Relationships: [];
+      };
+      saved_inbox: {
+        Row: {
+          id: string;
+          user_id: string;
+          messages: Json;
+          replies: Json;
+          created_at: string;
+        };
+        Insert: {
+          user_id: string;
+          messages: Json;
+          replies: Json;
+        };
+        Update: {
+          messages?: Json;
+          replies?: Json;
+        };
+        Relationships: [];
+      };
+      post_metrics: {
+        Row: {
+          id: string;
+          user_id: string;
+          post_title: string;
+          likes: number;
+          comments: number;
+          shares: number;
+          saves: number;
+          posted_at: string;
+          created_at: string;
+        };
+        Insert: {
+          user_id: string;
+          post_title: string;
+          likes: number;
+          comments: number;
+          shares: number;
+          saves: number;
+          posted_at: string;
+        };
+        Update: {
+          post_title?: string;
+          likes?: number;
+          comments?: number;
+          shares?: number;
+          saves?: number;
+          posted_at?: string;
+        };
+        Relationships: [];
+      };
     };
     Views: Record<string, never>;
     Functions: Record<string, never>;
@@ -259,4 +328,51 @@ export interface SavedCompetitorRow {
   industry: string | null;
   result: Json;
   created_at: string;
+}
+
+export type CommentSentiment = "Question" | "Compliment" | "Complaint" | "Purchase Intent";
+
+export interface CommentItem {
+  id: string;
+  original: string;
+  translation: string;
+  sentiment: CommentSentiment;
+  reply: string | null;
+}
+
+export type InboxCategory =
+  | "Price Inquiry"
+  | "Shipping Question"
+  | "Ingredient Question"
+  | "Complaint"
+  | "General Praise"
+  | "Purchase Ready";
+
+export type InboxPriority = "urgent" | "high" | "normal";
+
+export interface InboxItem {
+  id: string;
+  original: string;
+  translation: string;
+  category: InboxCategory;
+  priority: InboxPriority;
+  reply: string | null;
+}
+
+export interface PostMetric {
+  id: string;
+  post_title: string;
+  likes: number;
+  comments: number;
+  shares: number;
+  saves: number;
+  posted_at: string;
+  created_at: string;
+}
+
+export interface PerformanceInsights {
+  topInsight: string;
+  bestContentType: string;
+  bestPostingDay: string;
+  recommendations: string[];
 }

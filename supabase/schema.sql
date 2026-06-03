@@ -74,6 +74,43 @@ alter table users add column if not exists industry          text;
 alter table users add column if not exists target_audience   jsonb default '[]'::jsonb;
 alter table users add column if not exists selling_points    text;
 
+-- -----------------------------------------------------------------------
+-- New feature tables (v2)
+-- -----------------------------------------------------------------------
+
+create table if not exists saved_comments (
+  id uuid primary key default gen_random_uuid(),
+  user_id text not null references users(id) on delete cascade,
+  comments jsonb not null default '[]',
+  replies jsonb not null default '[]',
+  created_at timestamptz not null default now()
+);
+
+create table if not exists saved_inbox (
+  id uuid primary key default gen_random_uuid(),
+  user_id text not null references users(id) on delete cascade,
+  messages jsonb not null default '[]',
+  replies jsonb not null default '[]',
+  created_at timestamptz not null default now()
+);
+
+create table if not exists post_metrics (
+  id uuid primary key default gen_random_uuid(),
+  user_id text not null references users(id) on delete cascade,
+  post_title text not null,
+  likes integer not null default 0,
+  comments integer not null default 0,
+  shares integer not null default 0,
+  saves integer not null default 0,
+  posted_at date not null,
+  created_at timestamptz not null default now()
+);
+
+create index if not exists saved_comments_user_id_idx on saved_comments(user_id);
+create index if not exists saved_inbox_user_id_idx on saved_inbox(user_id);
+create index if not exists post_metrics_user_id_idx on post_metrics(user_id);
+create index if not exists post_metrics_posted_at_idx on post_metrics(posted_at desc);
+
 -- Row Level Security
 alter table users enable row level security;
 alter table toolkits enable row level security;
