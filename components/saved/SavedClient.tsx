@@ -179,38 +179,40 @@ export function SavedClient({
       </div>
 
       {/* Tabs */}
-      <div className="flex items-center gap-1 border-b border-[#1a1a1a]">
-        {(Object.keys(TAB_META) as TabKey[]).map((key) => {
-          const { label, Icon } = TAB_META[key];
-          const active = tab === key;
-          return (
-            <button
-              key={key}
-              type="button"
-              onClick={() => {
-                setTab(key);
-                setConfirmDelete(null);
-              }}
-              className={cn(
-                "flex items-center gap-2 border-b-2 px-4 py-2.5 text-sm transition-colors",
-                active
-                  ? "border-[#ff2d55] text-white"
-                  : "border-transparent text-[#6b7280] hover:text-white"
-              )}
-            >
-              <Icon size={13} />
-              {label}
-              <span
+      <div className="overflow-x-auto -mx-4 px-4 md:mx-0 md:px-0">
+        <div className="flex items-center gap-0 border-b border-[#1a1a1a] min-w-max md:min-w-0">
+          {(Object.keys(TAB_META) as TabKey[]).map((key) => {
+            const { label, Icon } = TAB_META[key];
+            const active = tab === key;
+            return (
+              <button
+                key={key}
+                type="button"
+                onClick={() => {
+                  setTab(key);
+                  setConfirmDelete(null);
+                }}
                 className={cn(
-                  "rounded-full px-2 py-0.5 font-mono text-xs",
-                  active ? "bg-[#ff2d55]/20 text-[#ff2d55]" : "bg-[#1a1a1a] text-[#4a4a4a]"
+                  "flex items-center gap-2 border-b-2 px-4 py-2.5 text-sm whitespace-nowrap transition-colors",
+                  active
+                    ? "border-[#ff2d55] text-white"
+                    : "border-transparent text-[#6b7280] hover:text-white"
                 )}
               >
-                {counts[key]}
-              </span>
-            </button>
-          );
-        })}
+                <Icon size={13} />
+                {label}
+                <span
+                  className={cn(
+                    "rounded-full px-2 py-0.5 font-mono text-xs",
+                    active ? "bg-[#ff2d55]/20 text-[#ff2d55]" : "bg-[#1a1a1a] text-[#4a4a4a]"
+                  )}
+                >
+                  {counts[key]}
+                </span>
+              </button>
+            );
+          })}
+        </div>
       </div>
 
       {/* Content */}
@@ -395,7 +397,7 @@ export function SavedClient({
             className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm"
             onClick={closePanel}
           />
-          <div className="fixed inset-y-0 right-0 z-50 flex w-full max-w-2xl flex-col border-l border-[#1a1a1a] bg-[#0a0a0a] shadow-2xl transition-transform duration-300">
+          <div className="fixed inset-0 md:inset-y-0 md:left-auto md:right-0 z-50 flex w-full md:max-w-2xl flex-col border-l border-[#1a1a1a] bg-[#0a0a0a] shadow-2xl transition-transform duration-300">
             {/* Panel header */}
             <div className="flex shrink-0 items-center justify-between border-b border-[#1a1a1a] px-6 py-4">
               <div className="flex items-center gap-2.5">

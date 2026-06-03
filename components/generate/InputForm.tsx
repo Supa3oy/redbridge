@@ -154,7 +154,7 @@ export function InputForm({ onResult, initialIndustry = "", initialProductDescri
           Content Tone{" "}
           <span className="font-normal text-[#4a4a4a]">(optional)</span>
         </Label>
-        <div className="flex flex-wrap gap-2">
+        <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap">
           {TONES.map(({ value, sublabel }) => (
             <button
               key={value}

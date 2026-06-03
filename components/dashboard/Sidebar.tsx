@@ -20,7 +20,7 @@ export function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="flex h-screen w-60 flex-col border-r border-[#1a1a1a] bg-[#0a0a0a] px-4 py-6">
+    <aside className="hidden md:flex h-screen w-60 flex-col border-r border-[#1a1a1a] bg-[#0a0a0a] px-4 py-6">
       <div className="mb-8 px-2">
         <span className="font-mono text-sm font-bold tracking-widest text-[#ff2d55] uppercase">
           RedBridge

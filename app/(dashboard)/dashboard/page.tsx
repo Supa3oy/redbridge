@@ -173,7 +173,7 @@ export default async function DashboardPage() {
     <div className="space-y-8">
       {/* Welcome */}
       <div>
-        <h1 className="text-2xl font-bold text-white">
+        <h1 className="text-xl font-bold text-white md:text-2xl">
           <Greeting name={displayName} />
         </h1>
         <p className="mt-1 text-sm text-[#6b7280]">{dateStr}</p>
@@ -279,7 +279,7 @@ export default async function DashboardPage() {
                       </p>
                     </div>
                   </div>
-                  <div className="flex shrink-0 items-center gap-4">
+                  <div className="flex shrink-0 flex-col items-end gap-0.5 sm:flex-row sm:items-center sm:gap-4">
                     <TimeAgo
                       dateStr={item.createdAt}
                       className="font-mono text-xs text-[#4a4a4a]"

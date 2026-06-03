@@ -159,7 +159,7 @@ export function OnboardingFlow({ userId: _userId }: OnboardingFlowProps) {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[#0a0a0a] px-4 py-12">
+    <div className="flex min-h-screen items-start justify-center bg-[#0a0a0a] px-4 py-8 sm:items-center sm:py-12">
       <div className="w-full max-w-lg">
         {/* Logo */}
         <div className="mb-8 text-center">
@@ -194,7 +194,7 @@ export function OnboardingFlow({ userId: _userId }: OnboardingFlowProps) {
         {/* Card */}
         <div
           style={cardStyle}
-          className="rounded-2xl border border-[#1a1a1a] bg-[#111] p-8 shadow-2xl"
+          className="rounded-2xl border border-[#1a1a1a] bg-[#111] p-5 shadow-2xl sm:p-8"
         >
           {/* ── STEP 1 ── */}
           {step === 1 && (

@@ -104,7 +104,7 @@ export function TrendsGenerator({ initialHistory }: TrendsGeneratorProps) {
   return (
     <div className="space-y-10">
       <div>
-        <h1 className="text-2xl font-bold">XHS Trends</h1>
+        <h1 className="text-xl font-bold md:text-2xl">XHS Trends</h1>
         <p className="mt-1 text-sm text-[#6b7280]">
           Weekly trending topics on Xiaohongshu — curated by industry.
         </p>
@@ -121,8 +121,8 @@ export function TrendsGenerator({ initialHistory }: TrendsGeneratorProps) {
         <p className="text-sm text-[#6b7280]">
           Discover what Chinese consumers on Xiaohongshu are searching this week.
         </p>
-        <div className="flex flex-wrap items-center gap-3">
-          <div className="w-64">
+        <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+          <div className="w-full sm:w-64">
             <Select value={industry} onValueChange={handleIndustryChange}>
               <SelectTrigger>
                 <SelectValue />
@@ -136,7 +136,7 @@ export function TrendsGenerator({ initialHistory }: TrendsGeneratorProps) {
               </SelectContent>
             </Select>
           </div>
-          <Button onClick={() => fetchTrends(false)} disabled={loading}>
+          <Button onClick={() => fetchTrends(false)} disabled={loading} className="w-full sm:w-auto">
             {loading ? (
               <RefreshCw size={14} className="animate-spin" />
             ) : (

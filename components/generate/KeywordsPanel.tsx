@@ -11,7 +11,7 @@ function HeatBar({ score }: { score: number }) {
     score >= 80 ? "bg-red-500" : score >= 50 ? "bg-amber-500" : "bg-emerald-500";
   return (
     <div className="flex items-center gap-2">
-      <div className="h-1.5 w-16 overflow-hidden rounded-full bg-[#1a1a1a]">
+      <div className="h-1.5 w-12 overflow-hidden rounded-full bg-[#1a1a1a]">
         <div className={cn("h-full rounded-full", color)} style={{ width: `${score}%` }} />
       </div>
       <span className="font-mono text-xs text-[#6b7280]">{score}</span>
@@ -25,7 +25,27 @@ export function KeywordsPanel({ keywords }: KeywordsPanelProps) {
       <h2 className="font-mono text-xs uppercase tracking-widest text-[#6b7280]">
         Keywords — {keywords.length} with heat scores
       </h2>
-      <div className="rounded-xl border border-[#1a1a1a] bg-[#111] overflow-hidden">
+
+      {/* Mobile card grid */}
+      <div className="md:hidden grid grid-cols-2 gap-2">
+        {keywords.map((kw) => (
+          <div
+            key={kw.id}
+            className="rounded-xl border border-[#1a1a1a] bg-[#111] p-3 space-y-1.5"
+          >
+            <p className="text-lg leading-none">{kw.chinese}</p>
+            <p className="font-mono text-[10px] text-[#6b7280]">{kw.pinyin}</p>
+            <p className="text-xs text-white leading-snug">{kw.english}</p>
+            <HeatBar score={kw.heatScore} />
+            <Badge variant="secondary" className="text-[10px] px-1.5 py-0">
+              {kw.category}
+            </Badge>
+          </div>
+        ))}
+      </div>
+
+      {/* Desktop table */}
+      <div className="hidden md:block rounded-xl border border-[#1a1a1a] bg-[#111] overflow-hidden">
         <table className="w-full text-sm">
           <thead>
             <tr className="border-b border-[#1a1a1a]">

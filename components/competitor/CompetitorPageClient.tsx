@@ -109,15 +109,15 @@ export function CompetitorPageClient({ initialAnalyses }: CompetitorPageClientPr
   return (
     <div className="space-y-10">
       <div>
-        <h1 className="text-2xl font-bold">Competitor Analysis</h1>
+        <h1 className="text-xl font-bold md:text-2xl">Competitor Analysis</h1>
         <p className="mt-1 text-sm text-[#6b7280]">
           Analyse any brand&apos;s XHS strategy — keywords, tone, angles, and the gaps you can own.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
         {/* Main column */}
-        <div className="lg:col-span-2 space-y-8">
+        <div className="md:col-span-2 space-y-8">
           {/* Form */}
           <div className="rounded-xl border border-[#1a1a1a] bg-[#111] p-6">
             <form
@@ -200,8 +200,8 @@ export function CompetitorPageClient({ initialAnalyses }: CompetitorPageClientPr
           {/* Result */}
           {result && (
             <div id="competitor-result" className="space-y-4">
-              <div className="flex items-center justify-between gap-3">
-                <div className="flex items-center gap-3">
+              <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+                <div className="flex flex-wrap items-center gap-2">
                   <h2 className="font-semibold text-white">{activeCompetitor}</h2>
                   {cached && (
                     <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 px-2.5 py-0.5 font-mono text-xs text-amber-400">
