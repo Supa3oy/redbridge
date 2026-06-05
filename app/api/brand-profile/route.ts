@@ -42,7 +42,7 @@ export async function PATCH(req: Request) {
         brand_name: (brand_name as string) ?? null,
         industry: (industry as string) ?? null,
         website_url: (website_url as string) ?? null,
-        target_audience: (target_audience as unknown[]) ?? [],
+        target_audience: (target_audience as import("@/types/database").Json) ?? [],
         selling_points: (selling_points as string) ?? null,
       },
       { onConflict: "id" }
