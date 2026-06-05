@@ -10,6 +10,7 @@ import { cn } from "@/lib/utils";
 import { LIMITS_BY_PLAN } from "@/lib/anthropic";
 import type { Plan } from "@/lib/anthropic";
 import type { ToolkitResult } from "@/types/database";
+import { IntelligenceBanner } from "@/components/dashboard/IntelligenceBanner";
 import {
   Wand2,
   Hash,
@@ -171,6 +172,7 @@ export default async function DashboardPage() {
 
   return (
     <div className="space-y-8">
+      <IntelligenceBanner />
       {/* Welcome */}
       <div>
         <h1 className="text-xl font-bold text-white md:text-2xl">

@@ -138,6 +138,21 @@ create index if not exists email_logs_user_id_idx on email_logs(user_id);
 -- Add email_subscribed to users (run if upgrading existing table)
 alter table users add column if not exists email_subscribed boolean not null default true;
 
+-- -----------------------------------------------------------------------
+-- v4: Intelligence Reports (RedBridge 2.0)
+-- -----------------------------------------------------------------------
+create table if not exists intelligence_reports (
+  id uuid primary key default gen_random_uuid(),
+  user_id text not null references users(id) on delete cascade,
+  brand_name text not null,
+  industry text not null,
+  result jsonb not null,
+  created_at timestamptz not null default now()
+);
+
+create index if not exists intelligence_reports_user_id_idx on intelligence_reports(user_id);
+create index if not exists intelligence_reports_created_at_idx on intelligence_reports(created_at desc);
+
 -- Row Level Security
 alter table users enable row level security;
 alter table toolkits enable row level security;

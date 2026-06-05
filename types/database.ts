@@ -173,6 +173,24 @@ export interface Database {
         };
         Relationships: [];
       };
+      intelligence_reports: {
+        Row: {
+          id: string;
+          user_id: string;
+          brand_name: string;
+          industry: string;
+          result: Json;
+          created_at: string;
+        };
+        Insert: {
+          user_id: string;
+          brand_name: string;
+          industry: string;
+          result: Json;
+        };
+        Update: { result?: Json };
+        Relationships: [];
+      };
       shoot_briefs: {
         Row: {
           id: string;
@@ -372,6 +390,34 @@ export interface SavedCompetitorRow {
   industry: string | null;
   result: Json;
   created_at: string;
+}
+
+export interface IntelligenceReport {
+  brandPerceptionScore: number;
+  culturalTranslationGap: {
+    headline: string;
+    description: string;
+    gaps: Array<{
+      aspect: string;
+      australian: string;
+      chinese: string;
+      recommendation: string;
+    }>;
+  };
+  marketOpportunity: {
+    score: number;
+    headline: string;
+    description: string;
+    segments: string[];
+  };
+  xhsPositioning: {
+    recommendedNarrative: string;
+    toneOfVoice: string;
+    visualStyle: string;
+    contentPillars: string[];
+  };
+  consumerInsights: Array<{ insight: string; implication: string }>;
+  quickWins: string[];
 }
 
 export interface ShootBriefResult {
