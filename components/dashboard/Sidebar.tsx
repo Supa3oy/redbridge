@@ -21,8 +21,19 @@ import { UserButton } from "@clerk/nextjs";
 import { cn } from "@/lib/utils";
 import { UsageMeter } from "./UsageMeter";
 
-export function Sidebar() {
+interface SidebarProps {
+  hasProfile?: boolean;
+  hasReport?: boolean;
+}
+
+export function Sidebar({ hasProfile = false, hasReport = false }: SidebarProps) {
   const pathname = usePathname();
+
+  // Routes that get a green dot when the corresponding data exists
+  const dots: Record<string, boolean> = {
+    "/intelligence": hasReport,
+    "/brand-profile": hasProfile,
+  };
 
   const link = (href: string, label: string, Icon: React.ElementType) => (
     <Link
@@ -36,7 +47,10 @@ export function Sidebar() {
       )}
     >
       <Icon size={15} />
-      {label}
+      <span className="flex-1">{label}</span>
+      {dots[href] && (
+        <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 shrink-0" />
+      )}
     </Link>
   );
 

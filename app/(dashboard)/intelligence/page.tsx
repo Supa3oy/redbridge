@@ -10,7 +10,7 @@ export default async function IntelligencePage() {
   const { userId } = await auth();
   if (!userId) redirect("/sign-in");
 
-  const [{ data: user }, { data: report }] = await Promise.all([
+  const [{ data: user }, { data: reports }] = await Promise.all([
     supabaseAdmin
       .from("users")
       .select("brand_name, industry, website_url, target_audience, selling_points")
@@ -21,9 +21,18 @@ export default async function IntelligencePage() {
       .select("id, brand_name, industry, result, created_at")
       .eq("user_id", userId)
       .order("created_at", { ascending: false })
-      .limit(1)
-      .maybeSingle(),
+      .limit(20),
   ]);
+
+  const allReports = (reports ?? []).map((r) => ({
+    id: r.id,
+    brand_name: r.brand_name,
+    industry: r.industry,
+    result: r.result as unknown as IntelligenceReport,
+    created_at: r.created_at,
+  }));
+
+  const mostRecent = allReports[0] ?? null;
 
   return (
     <IntelligenceClient
@@ -34,17 +43,8 @@ export default async function IntelligencePage() {
         targetAudience: (user?.target_audience as string[]) ?? [],
         productDescription: user?.selling_points ?? "",
       }}
-      initialReport={
-        report
-          ? {
-              id: report.id,
-              brand_name: report.brand_name,
-              industry: report.industry,
-              result: report.result as unknown as IntelligenceReport,
-              created_at: report.created_at,
-            }
-          : null
-      }
+      initialReport={mostRecent}
+      allReports={allReports}
     />
   );
 }

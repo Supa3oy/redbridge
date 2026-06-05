@@ -40,6 +40,8 @@ export function BrandProfileClient({ initialProfile }: BrandProfileClientProps) 
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState("");
 
+  const profileExists = !!(initialProfile.brand_name);
+
   function toggleAudience(value: string) {
     setAudiences((prev) => prev.includes(value) ? prev.filter((a) => a !== value) : [...prev, value]);
   }
@@ -75,10 +77,18 @@ export function BrandProfileClient({ initialProfile }: BrandProfileClientProps) 
 
   return (
     <div className="space-y-6 md:space-y-8 max-w-2xl">
-      <div className="flex items-start justify-between gap-4">
-        <div>
-          <h1 className="text-xl font-bold md:text-2xl">Brand Profile</h1>
-          <p className="mt-1 text-sm text-[#6b7280]">
+      <div className="flex items-start justify-between gap-4 flex-wrap">
+        <div className="space-y-1">
+          <div className="flex items-center gap-2.5 flex-wrap">
+            <h1 className="text-xl font-bold md:text-2xl">Brand Profile</h1>
+            {profileExists && (
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-1 font-mono text-[10px] text-emerald-400">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                Profile saved
+              </span>
+            )}
+          </div>
+          <p className="text-sm text-[#6b7280]">
             Your brand profile powers the Intelligence Report and all content generation.
           </p>
         </div>
