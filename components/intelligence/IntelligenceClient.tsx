@@ -99,13 +99,30 @@ export function IntelligenceClient({ profile, initialReport }: IntelligenceClien
           forceNew,
         }),
       });
-      const data = await res.json();
-      if (!res.ok) { setError(data.error ?? "Generation failed"); return; }
+
+      let data: Record<string, unknown>;
+      try {
+        data = await res.json();
+      } catch {
+        setError(`Server error (${res.status}) — please try again`);
+        return;
+      }
+
+      if (!res.ok) {
+        setError((data.error as string) ?? `Generation failed (${res.status})`);
+        return;
+      }
+
+      if (!data.result || typeof data.result !== "object") {
+        setError("Report generation failed — no result returned. Please try again.");
+        return;
+      }
+
       setReport(data.result as IntelligenceReport);
       setReportMeta({ brandName: brandName.trim(), createdAt: new Date().toISOString() });
       setTimeout(() => document.getElementById("report-output")?.scrollIntoView({ behavior: "smooth" }), 100);
-    } catch {
-      setError("Network error — please try again");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Network error — please try again");
     } finally {
       setLoading(false);
     }
@@ -168,8 +185,6 @@ export function IntelligenceClient({ profile, initialReport }: IntelligenceClien
           />
         </div>
 
-        {error && <p className="font-mono text-xs text-red-400">{error}</p>}
-
         <div className="flex items-center gap-3">
           <Button
             onClick={() => generate(false)}
@@ -180,7 +195,7 @@ export function IntelligenceClient({ profile, initialReport }: IntelligenceClien
             {loading ? <Loader2 size={16} className="animate-spin" /> : <Sparkles size={16} />}
             {loading ? "Generating Report…" : report ? "Regenerate Report" : "Generate Intelligence Report"}
           </Button>
-          {report && (
+          {report && !loading && (
             <p className="font-mono text-xs text-[#3a3a3a]">
               Last generated {reportMeta ? new Date(reportMeta.createdAt).toLocaleDateString("en-AU") : ""}
             </p>
@@ -188,6 +203,13 @@ export function IntelligenceClient({ profile, initialReport }: IntelligenceClien
         </div>
         <p className="font-mono text-xs text-[#3a3a3a]">Counts as 1 generation.</p>
       </div>
+
+      {/* Error banner — outside the form card so it's always visible */}
+      {error && (
+        <div className="rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3">
+          <p className="text-sm font-medium text-red-400">{error}</p>
+        </div>
+      )}
 
       {/* Report output */}
       {report && (

@@ -59,11 +59,15 @@ export function BrandProfileClient({ initialProfile }: BrandProfileClientProps) 
           selling_points: sellingPoints,
         }),
       });
-      if (!res.ok) { setError("Failed to save"); return; }
+      const data = await res.json();
+      if (!res.ok) {
+        setError(data?.error ?? `Save failed (${res.status})`);
+        return;
+      }
       setSaved(true);
       setTimeout(() => setSaved(false), 2500);
-    } catch {
-      setError("Network error — please try again");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Network error — please try again");
     } finally {
       setSaving(false);
     }
